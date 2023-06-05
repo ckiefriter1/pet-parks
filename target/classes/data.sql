@@ -1,6 +1,6 @@
-INSERT INTO amenity (amenityName) VALUES ('Dog friendly');
-INSERT INTO amenity (amenityName) VALUES ('cat friendly');
-INSERT INTO amenity (amenityName) VALUES ('turlte friendly');
-INSERT INTO amenity (amenityName) VALUES ('chicken friendly');
-INSERT INTO amenity (amenityName) VALUES ('restrooms');
-INSERT INTO amenity (amenityName) VALUES ('Hot dog stand');
+INSERT INTO amenity (amenity) VALUES ('Dog friendly');
+INSERT INTO amenity (amenity) VALUES ('cat friendly');
+INSERT INTO amenity (amenity) VALUES ('turlte friendly');
+INSERT INTO amenity (amenity) VALUES ('chicken friendly');
+INSERT INTO amenity (amenity) VALUES ('restrooms');
+INSERT INTO amenity (amenity) VALUES ('Hot dog stand');
