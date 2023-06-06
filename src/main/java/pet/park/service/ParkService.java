@@ -1,9 +1,13 @@
 package pet.park.service;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +23,9 @@ public class ParkService {
 	
 	@Transactional(readOnly = false)
 	public ContributorData saveContributor(ContributorData contributorData) {
-		
 		Long contributorId = contributorData.getContributorId();
-		Contributor contributor = findOrCreateContributor(contributorId);
-		
+		Contributor contributor = findOrCreateContributor(contributorId, contributorData.getContributorEmail());
+
 		setFieldsInContributor(contributor, contributorData);
 		return new ContributorData(contributorDao.save(contributor));
 	}
@@ -33,10 +36,16 @@ public class ParkService {
 		
 	}
 
-	private Contributor findOrCreateContributor(Long contributorId) {
+	private Contributor findOrCreateContributor(Long contributorId, String contributorEmail) {
 		Contributor contributor;
 		
 		if (Objects.isNull(contributorId)) {
+			Optional<Contributor> opContrib = contributorDao.findByContributorEmail(contributorEmail);
+			
+			if (opContrib.isPresent()) {
+				throw new DuplicateKeyException("Contributor with Email " + contributorEmail + " already exists.");
+			}
+			
 			contributor = new Contributor();
 		}
 		else {
@@ -48,7 +57,33 @@ public class ParkService {
 
 	private Contributor findContributorById(Long contributorId) {
 		
-		return contributorDao.findById(contributorId).orElseThrow( () -> new NoSuchElementException("Contributor with ID = " + contributorId + "was not found." ));
+		return contributorDao.findById(contributorId).orElseThrow( () -> new NoSuchElementException("Contributor with ID = " + contributorId + " was not found." ));
+	}
+
+	@Transactional(readOnly = true)
+	public List<ContributorData> retrieveAllContributors() {
+		List<Contributor> contributors = contributorDao.findAll(); 
+		List<ContributorData> response = new LinkedList<>();
+		
+		for (Contributor contributor : contributors) {
+			response.add(new ContributorData(contributor));
+		}
+		
+		return response;
+	}
+
+	@Transactional(readOnly = true)
+	public ContributorData retrieveContributorById(Long contributorId) {
+		Contributor contributor = this.findContributorById(contributorId);
+		
+		return new ContributorData(contributor);
+	}
+
+	@Transactional(readOnly = false)
+	public void deleteContributorById(Long contributorId) {
+		Contributor contributor = this.findContributorById(contributorId);
+		contributorDao.delete(contributor);
+		
 	}
 
 }
