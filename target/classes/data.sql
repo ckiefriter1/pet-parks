@@ -1,3 +1,7 @@
+-- delete from pet_park_amenity;
+-- DELETE FROM amenity;
+-- DELETE FROM contributor;
+
 INSERT INTO amenity (amenity) VALUES ('Dog friendly');
 INSERT INTO amenity (amenity) VALUES ('cat friendly');
 INSERT INTO amenity (amenity) VALUES ('turlte friendly');
