@@ -303,4 +303,15 @@ public class ParkService {
     return new PetParkData(petPark);
   }
 
+   @Transactional(readOnly = true)
+   public List<PetParkData> retrieveAllPetParks() {
+      // @formatter:off
+	  return petParkDao.findAll() // Retrieves a List of PetPark
+	      .stream()               // Converts to a Stream of PetPark
+	      .map(PetParkData::new)  // Converts to a Stream of PetParkData
+	      .toList();              // Converts to a List of PetParkData
+	// @formatter:on
+
+   }
+	
 }

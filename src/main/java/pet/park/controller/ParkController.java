@@ -333,4 +333,23 @@ public class ParkController {
 
     return parkService.retrievePetParkById(contributorId, parkId);
   }
+  
+  /**
+   * This method is used to retrieve all contributors. It is mapped to a PUT
+   * request sent to "/pet_park/contributor".
+   * 
+   * Here are explanations of the annotations:
+   * 
+   * @GetMapping This tells Spring to map a GET request to
+   *             "/park".
+   * 
+   * @return A list of all pet parks.
+   */
+  @GetMapping("/park")
+  public List<PetParkData> retrieveAllPetParks() {
+    log.info("Retrieving all pet parks.");
+    return parkService.retrieveAllPetParks();
+  }
+
+
 }
