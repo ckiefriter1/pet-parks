@@ -341,7 +341,7 @@ public class ParkController {
    * Here are explanations of the annotations:
    * 
    * @GetMapping This tells Spring to map a GET request to
-   *             "/park".
+   *             "pet_park/park".
    * 
    * @return A list of all pet parks.
    */
