@@ -268,6 +268,36 @@ public class ParkController {
    * @return The pet park data with primary key and the associated contributor
    *         information.
    */
+   /**
+   * This method is used to add a park description from a contributor. It is
+   * called by sending a POST request to
+   * "/pet_park/contributor/{contributorId}/park". So, if you want to add a park
+   * description to a contributor with ID=3, you would send a POST request to
+   * "/pet_park/contributor/3/park". The park data is in the request body. It
+   * must conform to the following:
+   * 
+   * <pre>
+  {
+  "parkName": "My Modified Pet Park",
+  "directions": "Drive there",
+  "stateOrProvince": "ID",
+  "country": "USA",
+  "geoLocation": {
+    "latitude": "44.50045",
+    "longitude": "-111.25493"
+  },
+  "amenities": [
+    "dog friendly", "chicken friendly", "hot dog stand", "wifi"
+  ]
+  }
+   * </pre>
+   * 
+   * @param contributorId The ID (primary key value) of the contributor on which
+   *        to add the park description. This is passed in the URI.
+   * @param petParkData The pet park data. This is passed in the request body.
+   * @return The pet park data with primary key and the associated contributor
+   *         information.
+   */
   @PostMapping("/contributor/{contributorId}/park")
   @ResponseStatus(code = HttpStatus.CREATED)
   public PetParkData insertPetPark(@PathVariable Long contributorId,
@@ -279,7 +309,7 @@ public class ParkController {
     return parkService.savePetPark(contributorId, petParkData);
   }
 
-  /**
+/**
    * This method updates park data for the park with the given park ID. It is
    * called by sending an HTTP PUT request to
    * "/pet_park/contributor/{contributorId}/park/{parkId}. So, if the
